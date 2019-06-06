@@ -1,0 +1,101 @@
+{
+  "keepWaitingPipelines": false,
+  "lastModifiedBy": "anonymous",
+  "limitConcurrent": true,
+  "notifications": [
+    {
+      "address": "testci",
+      "level": "pipeline",
+      "type": "slack",
+      "when": [
+        "pipeline.starting",
+        "pipeline.complete",
+        "pipeline.failed"
+      ]
+    }
+  ],
+  "stages": [
+    {
+      "clusters": [
+        {
+          "account": "default",
+          "application": "vote",
+          "cloudProvider": "kubernetes",
+          "containers": [
+            {
+              "args": [],
+              "command": [],
+              "envFrom": [],
+              "envVars": [],
+              "imageDescription": {
+                "account": "dockerhub",
+                "fromTrigger": true,
+                "imageId": "index.docker.io/schoolofdevops/vote (Tag resolved at runtime)",
+                "registry": "index.docker.io",
+                "repository": "schoolofdevops/vote"
+              },
+              "imagePullPolicy": "IFNOTPRESENT",
+              "limits": {},
+              "name": "schoolofdevops-vote",
+              "ports": [
+                {
+                  "containerPort": 80,
+                  "name": "http",
+                  "protocol": "TCP"
+                }
+              ],
+              "requests": {},
+              "volumeMounts": []
+            }
+          ],
+          "deployment": {
+            "deploymentStrategy": {
+              "rollingUpdate": {
+                "maxSurge": 1,
+                "maxUnavailable": 1
+              },
+              "type": "RollingUpdate"
+            },
+            "enabled": false,
+            "minReadySeconds": 0
+          },
+          "dnsPolicy": "ClusterFirst",
+          "initContainers": [],
+          "interestingHealthProviderNames": [
+            "KubernetesContainer",
+            "KubernetesPod"
+          ],
+          "loadBalancers": [
+            "vote"
+          ],
+          "namespace": "dev",
+          "nodeSelector": {},
+          "podAnnotations": {},
+          "provider": "kubernetes",
+          "region": "dev",
+          "replicaSetAnnotations": {},
+          "strategy": "highlander",
+          "targetSize": 2,
+          "terminationGracePeriodSeconds": 30,
+          "useSourceCapacity": false,
+          "volumeSources": []
+        }
+      ],
+      "name": "Deploy",
+      "refId": "1",
+      "requisiteStageRefIds": [],
+      "type": "deploy"
+    }
+  ],
+  "triggers": [
+    {
+      "account": "dockerhub",
+      "enabled": true,
+      "organization": "schoolofdevops",
+      "registry": "index.docker.io",
+      "repository": "schoolofdevops/vote",
+      "type": "docker"
+    }
+  ],
+  "updateTs": "1559555814000"
+}

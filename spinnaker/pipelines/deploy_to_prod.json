@@ -1,0 +1,127 @@
+{
+  "keepWaitingPipelines": false,
+  "lastModifiedBy": "anonymous",
+  "limitConcurrent": true,
+  "stages": [
+    {
+      "cloudProvider": "kubernetes",
+      "cloudProviderType": "kubernetes",
+      "cluster": "vote",
+      "credentials": "default",
+      "name": "Find Image from Cluster",
+      "namespaces": [
+        "dev"
+      ],
+      "onlyEnabled": true,
+      "refId": "1",
+      "requisiteStageRefIds": [],
+      "selectionStrategy": "NEWEST",
+      "type": "findImage"
+    },
+    {
+      "clusters": [
+        {
+          "account": "default",
+          "application": "vote",
+          "cloudProvider": "kubernetes",
+          "containers": [
+            {
+              "args": [],
+              "command": [],
+              "envFrom": [],
+              "envVars": [],
+              "imageDescription": {
+                "cluster": "vote",
+                "fromContext": true,
+                "imageId": "Find Image from Cluster:undefined",
+                "repository": "Find Image from Cluster",
+                "stageId": "1"
+              },
+              "imagePullPolicy": "IFNOTPRESENT",
+              "limits": {},
+              "name": "find-image-from-cluster",
+              "ports": [
+                {
+                  "containerPort": 80,
+                  "name": "http",
+                  "protocol": "TCP"
+                }
+              ],
+              "requests": {},
+              "volumeMounts": []
+            }
+          ],
+          "deployment": {
+            "deploymentStrategy": {
+              "rollingUpdate": {
+                "maxSurge": 1,
+                "maxUnavailable": 1
+              },
+              "type": "RollingUpdate"
+            },
+            "enabled": false,
+            "minReadySeconds": 0
+          },
+          "dnsPolicy": "ClusterFirst",
+          "initContainers": [],
+          "interestingHealthProviderNames": [
+            "KubernetesContainer",
+            "KubernetesPod"
+          ],
+          "loadBalancers": [
+            "vote"
+          ],
+          "namespace": "prod",
+          "nodeSelector": {},
+          "podAnnotations": {},
+          "provider": "kubernetes",
+          "region": "prod",
+          "replicaSetAnnotations": {},
+          "strategy": "",
+          "targetSize": 10,
+          "terminationGracePeriodSeconds": 30,
+          "useSourceCapacity": false,
+          "volumeSources": []
+        }
+      ],
+      "name": "Deploy",
+      "refId": "2",
+      "requisiteStageRefIds": [
+        "1"
+      ],
+      "type": "deploy"
+    },
+    {
+      "cloudProvider": "kubernetes",
+      "cloudProviderType": "kubernetes",
+      "cluster": "vote",
+      "credentials": "default",
+      "interestingHealthProviderNames": [
+        "KubernetesService"
+      ],
+      "name": "Disable Cluster",
+      "namespaces": [
+        "prod"
+      ],
+      "preferLargerOverNewer": "false",
+      "refId": "3",
+      "remainingEnabledServerGroups": 1,
+      "requisiteStageRefIds": [
+        "2"
+      ],
+      "type": "disableCluster"
+    }
+  ],
+  "triggers": [
+    {
+      "application": "vote",
+      "enabled": true,
+      "pipeline": "716535a4-84e0-48c7-8aed-0440cc3922f3",
+      "status": [
+        "successful"
+      ],
+      "type": "pipeline"
+    }
+  ],
+  "updateTs": "1559557329000"
+}
