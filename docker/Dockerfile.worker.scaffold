@@ -1,0 +1,11 @@
+FROM 
+
+WORKDIR /app 
+
+COPY 
+
+RUN 
+
+EXPORT 
+
+CMD 
