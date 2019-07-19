@@ -6,6 +6,4 @@ COPY
 
 RUN 
 
-EXPORT 
-
 CMD 
