@@ -10,7 +10,7 @@ volumes:
 
 services:
   jenkins:
-    image: jenkins-blueocean
+    image: jenkins-blueocean:v1
     build:
       context: .
       dockerfile: Dockerfile
@@ -35,6 +35,8 @@ services:
     image: docker:dind
     ports:
       - 2376:2376
+      - 5000:5000
+      - 5001:5001
     environment:
       - DOCKER_TLS_CERTDIR=/certs
     networks:
