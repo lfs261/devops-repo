@@ -10,7 +10,7 @@ volumes:
 
 services:
   jenkins:
-    image: jenkins-blueocean:v1
+    image: jenkins-blueocean:2.343-slim
     build:
       context: .
       dockerfile: Dockerfile
